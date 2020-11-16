@@ -29,7 +29,7 @@ func main() {
 			Action: func(c *cli.Context) error {
 				ns, err := net.LookupNS(c.String("host"))
 				if err != nil {
-					return err
+					fmt.Println(err)
 				}
 				for i := 0; i < len(ns); i++ {
 					fmt.Println(ns[i].Host)
@@ -44,11 +44,24 @@ func main() {
 			Action: func(c *cli.Context) error {
 				ip, err := net.LookupIP(c.String("host"))
 				if err != nil {
-					return err
+					fmt.Println(err)
 				}
 				for i := 0; i < len(ip); i++ {
 					fmt.Println(ip[i])
 				}
+				return nil
+			},
+		},
+		{
+			Name:  "cname",
+			Usage: "Looks up the CNAME for a given Host",
+			Flags: myFlags,
+			Action: func(c *cli.Context) error {
+				cname, err := net.LookupCNAME(c.String("host"))
+				if err != nil {
+					fmt.Println(err)
+				}
+				fmt.Println(cname)
 				return nil
 			},
 		},
