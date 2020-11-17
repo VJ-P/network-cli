@@ -37,8 +37,12 @@ func main() {
 
 	portFlags := []cli.Flag{
 		&cli.StringFlag{
-			Name:  "port, p",
+			Name:  "port",
 			Usage: "Port to check",
+		},
+		&cli.StringFlag{
+			Name:  "protocol",
+			Usage: "Protocol for the port, TCP or UDP",
 		},
 	}
 
@@ -110,7 +114,7 @@ func main() {
 			Usage: "Scan a given port to see if its open",
 			Flags: portFlags,
 			Action: func(c *cli.Context) error {
-				open := scanPort("tcp", "localhost", c.String("port"))
+				open := scanPort(c.String("protocol"), "localhost", c.String("port"))
 				fmt.Println("Port "+c.String("port")+":", open)
 				return nil
 			},
